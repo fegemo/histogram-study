@@ -56,3 +56,7 @@ def unzip_dataset(zip_file_path, output_folder, verbose=False):
             zip_ref.extract(member, output_folder)
     if verbose:
         print(f"Extracted {output_folder} - dataset ready")
+
+
+if __name__ == "__main__":
+    ensure_datasets()
