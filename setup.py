@@ -59,4 +59,5 @@ def unzip_dataset(zip_file_path, output_folder, verbose=False):
 
 
 if __name__ == "__main__":
-    ensure_datasets()
+    options = OptionParser().parse()
+    ensure_datasets(True)

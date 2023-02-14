@@ -6,7 +6,7 @@ import io_utils
 
 SEED = 42
 
-DATASET_NAMES = [f"pixel-landscapes", f"photo-landscapes", "pixelart-misc"]
+DATASET_NAMES = ["pixel-landscapes", f"photo-landscapes", "pixelart-misc"]
 DATA_FOLDERS = [
     os.sep.join(["datasets", folder])
     for folder
@@ -64,7 +64,7 @@ class OptionParser(metaclass=SingletonMeta):
 
     def initialize(self):
         self.parser.add_argument(
-            "dataset", help="one from { pixel-landscapes, photo-landscapes-landscapes, pixel-landscapes } - the dataset to train with")
+            "dataset", help="one from { pixel-landscapes, photo-landscapes, pixelart-misc } - the dataset to train with")
         self.parser.add_argument(
             "--model", help="one from { vanilla, akash } the network architecture to use", default="akash")
         self.parser.add_argument("--verbose", help="outputs verbosity information", default=False, action="store_true")
@@ -96,7 +96,9 @@ class OptionParser(metaclass=SingletonMeta):
             self.initialize()
         self.values = self.parser.parse_args()
         setattr(self.values, "seed", SEED)
-        dataset_path = DATA_FOLDERS[["pixel-landscapes", "photo-landscapes-landscapes", "pixel-landscapes"].index(self.values.dataset)]
+        global DATASET_MASK
+        DATASET_MASK = list(map(lambda name: 1 if name == self.values.dataset else 0, DATASET_NAMES))
+        dataset_path = DATA_FOLDERS[DATASET_NAMES.index(self.values.dataset)]
         setattr(self.values, "dataset", dataset_path)
 
         if return_parser:
