@@ -246,7 +246,7 @@ class PreviewGeneratedImagesCallback(keras.callbacks.Callback):
         ensure_folder_structure(os.sep.join([self.log_folder, "images"]))
 
         for images, name in zip([self.train_examples, self.test_examples], ["train", "test"]):
-            _, _, encoded_images = model.encoder.predict(images)
+            _, _, encoded_images = model.encoder.predict(images, verbose=0)
             reconstructed_images = model.decoder(encoded_images)
 
             fig = plt.figure(figsize=(1 * self.no_images, 4 * self.no_images))

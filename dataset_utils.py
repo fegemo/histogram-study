@@ -76,11 +76,11 @@ def load_rgb_dataset(path, options, train_percentage=0.85):
 
             # 2. random crop
             if needs_cropping:
+                size = [crop_size, crop_size, channels]
                 if should_augment:
-                    image = tf.image.random_crop(image, size=[crop_size, crop_size, channels])
+                    image = tf.image.random_crop(image, size=size)
                 else:
-                    image = tf.image.random_crop(image, size=[crop_size, crop_size, channels], seed=options.seed)
-
+                    image = tf.image.stateless_random_crop(image, size=size, seed=(options.seed, options.seed))
 
             return image
 

@@ -4,7 +4,7 @@ from math import ceil
 
 import io_utils
 
-SEED = 42
+SEED = 39
 
 DATASET_NAMES = ["pixel-landscapes", f"photo-landscapes", "pixelart-misc"]
 DATA_FOLDERS = [
