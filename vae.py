@@ -150,15 +150,9 @@ class CVAE(BaseModel):
         kl_loss = -0.5 * (1 + z_log_var - tf.square(z_mean) - tf.exp(z_log_var))
         kl_loss = tf.reduce_mean(tf.reduce_sum(kl_loss, axis=1))
 
-        mse_loss = tf.reduce_mean(
-            tf.reduce_sum(
-                tf.pow((batch / 2. + 0.5) - (reconstruction / 2. + 0.5), 2), axis=(1, 2)
-            )
-        )
-        mae_loss = keras.losses.mae(batch / 2. + 0.5, reconstruction / 2. + 0.5)
-        ssim_loss = 1. - tf.reduce_mean(
-            tf.image.ssim(batch / 2. + 0.5, reconstruction / 2. + 0.5, 1.)
-        )
+        mse_loss = tf.reduce_mean(tf.math.squared_difference(reconstruction, batch))
+        mae_loss = tf.reduce_mean(tf.abs(reconstruction - batch))
+        ssim_loss = 1. - tf.reduce_mean(tf.image.ssim(batch, reconstruction, max_val=2.))
 
         original_histogram = histogram.calculate_rgbuv_histogram(batch)
         reconstructed_histogram = histogram.calculate_rgbuv_histogram(reconstruction)

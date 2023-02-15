@@ -53,6 +53,7 @@ model.fit(train_ds.batch(options.batch),
           epochs=options.epochs,
           shuffle=False,
           validation_data=test_ds.batch(options.batch),
+          verbose=2,
           callbacks=[
     tensorboard_callback,
     preview_callback,
